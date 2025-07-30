@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How to Generate Mock JSON Data Using JSON Data Generator</title>
+    <meta name="description" content="Easily generate realistic mock JSON data using our browser-based tool powered by the Faker.js library. No backend, no data saved.">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="https://jsondatagenerator.com/">JSON Data Generator</a>
+    </nav>
+
+    <div class="container my-5">
+        <h1 class="mb-4 text-primary">How to Generate Mock JSON Data Using JSON Data Generator</h1>
+
+        <p class="lead">
+            Need realistic test data for your app, API, or database? <strong>https://jsondatagenerator.com/</strong> lets you generate custom mock JSON data instantly—right from your browser.
+        </p>
+
+        <div class="alert alert-success">
+            ⚡ Powered by <a href="https://github.com/faker-js/faker" target="_blank">Faker.js</a> – no login.
+        </div>
+
+        <h2 class="mt-5">🚀 Quick Start</h2>
+
+        <ol class="mt-4">
+            <li>
+                <strong>Open the Tool:</strong>
+                Visit <a href="https://jsondatagenerator.com/" target="_blank">JSON Data Generator</a>.
+            </li>
+            <li>
+                <strong>Customize Your Schema:</strong>
+                Use dynamic tags based on the <a href="https://fakerjs.dev/api/" target="_blank">Faker.js API</a>.
+                <pre><code>{
+  "id": "{{faker.datatype.uuid}}",
+  "name": "{{faker.name.findName}}",
+  "email": "{{faker.internet.email}}",
+  "created_at": "{{faker.date.past}}"
+}</code></pre>
+            </li>
+            <li>
+                <strong>Generate Data:</strong>
+                Click the "Generate" button to see instant results.
+            </li>
+            <li>
+                <strong>Export:</strong>
+                Copy or download the JSON for use in development or testing.
+            </li>
+        </ol>
+
+        <h2 class="mt-5">🎯 Why Use JSON Data Generator?</h2>
+        <ul>
+            <li>✔️ 100% browser-based – no data storage</li>
+            <li>✔️ Secure – nothing is sent to a server</li>
+            <li>✔️ Customizable output using Faker.js expressions</li>
+            <li>✔️ Great for prototyping APIs, apps, and UIs</li>
+        </ul>
+
+        <h2 class="mt-5">🔐 Privacy First</h2>
+        <p>
+            We value your privacy. This tool runs completely in your browser. No API calls, no analytics on your schema, and no saved data.
+        </p>
+
+        <div class="alert alert-info mt-4">
+            ✅ Just open <a href="https://jsondatagenerator.com/" target="_blank">jsondatagenerator.com</a>, customize your fields, and start generating data.
+        </div>
+
+        <h2 class="mt-5">🧠 Examples</h2>
+        <p>You can use any Faker.js-compatible function with dot notation:</p>
+        <pre><code>{
+  "fullName": "{{faker.name.fullName}}",
+  "city": "{{faker.address.city}}",
+  "product": "{{faker.commerce.productName}}",
+  "price": "{{faker.commerce.price}}"
+}</code></pre>
+
+        <h2 class="mt-5">📌 Conclusion</h2>
+        <p>
+            JSON Data Generator makes it fast and easy to simulate real-world data for development and testing.
+            With built-in support for <a href="https://fakerjs.dev/" target="_blank">Faker.js</a>, you can create rich, structured data instantly—without compromising on privacy or speed.
+        </p>
+
+        <a class="btn btn-primary btn-lg mt-3" href="https://jsondatagenerator.com/" target="_blank">Start Generating Now</a>
+    </div>
+
+    <footer class="bg-light py-4 text-center mt-5">
+        <small>&copy; 2025 <a href="https://jsondatagenerator.com/">jsondatagenerator.com</a>. Built with 💻 and <a href="https://github.com/faker-js/faker" target="_blank">Faker.js</a>.</small>
+    </footer>
+
+</body>
+</html>

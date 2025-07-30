@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@faker-js/faker": "^9.8.0"
+  },
+  "dependencies": {
+    "chance": "^1.1.13"
+  }
+}

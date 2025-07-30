@@ -1,0 +1,163 @@
+﻿@page "/"
+@inject IJSRuntime jsRuntime
+@inject NavigationManager NavigationManager
+
+<div class="container-fluid px-3 mt-3"> 
+    <div class="nav nav-tabs mt-3" id="nav-tab" role="tablist">
+        <button class="nav-link @(activeTab == "schema" ? "active" : "")"
+                @onclick="SetSchemaTab" type="button"
+                data-toggle="tooltip" data-placement="top"
+                title="Use schema-based format to generate mock JSON and get a URL.">
+            Schema to JSON & URL
+        </button>
+
+        <button class="nav-link @(activeTab == "raw" ? "active" : "")"
+                @onclick="SetRawTab" type="button"
+                data-toggle="tooltip" data-placement="top"
+                title="Paste raw JSON to generate a shareable API endpoint.">
+            Raw JSON to URL
+        </button>
+    </div> 
+</div>
+
+<div class="container-fluid px-3">
+    <div class="tab-content mt-3">
+        @if (activeTab == "schema")
+        {
+            <div class="tab-pane fade show active">
+                <div class="container-fluid px-3">
+                    @if (!string.IsNullOrEmpty(ShortUrl))
+                    {
+                        <div id="sharable-url" class="alert alert-success d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>Access Your Data via GET API Endpoint:</strong>
+                                <a href="@GetFullUrl()" target="_blank" class="ms-2">
+                                    @GetFullUrl()
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <h5 class="text-primary fw-semibold mb-2">JSON Schema</h5>
+                            <StandaloneCodeEditor @ref="_editor"
+                                                  Id="sample-code-editor"
+                                                  ConstructionOptions="EditorConstructionOptions"
+                                                  OnDidInit="EditorOnDidInit"
+                                                  OnContextMenu="OnContextMenu" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <h5 class="text-success fw-semibold mb-2">Generated Output</h5>
+                            <StandaloneCodeEditor @ref="_editorResults"
+                                                  Id="my-code-editor-results"
+                                                  ConstructionOptions="EditorConstructionOptions_results" />
+                        </div>
+                    </div>
+
+                    <div class="fixed-bottom bg-light py-3 shadow-lg">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <button class="btn btn-primary rounded-pill px-4 py-2 shadow-sm" @onclick="GenerateData">
+                                <i class="bi bi-play-circle me-1"></i> Generate & Get URL
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (activeTab == "raw")
+        {
+            <div class="tab-pane fade show active">
+                <div class="container-fluid px-3">
+                    @if (!string.IsNullOrEmpty(ShortUrlForRawJson))
+                    {
+                        <div id="sharable-url" class="alert alert-success d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>Access Your Data via GET API Endpoint:</strong>
+                                <a href="@GetFullUrlForRawJson()" target="_blank" class="ms-2">
+                                    @GetFullUrlForRawJson()
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    <h5 class="text-info fw-semibold mb-2">Raw JSON</h5>
+                    <StandaloneCodeEditor @ref="_editorRaw"
+                                          Id="raw-json-editor"
+                                          ConstructionOptions="EditorConstructionOptions_results"
+                                          OnDidInit="EditorOnDidInit"
+                                          OnContextMenu="OnContextMenu" />
+                    <div class="fixed-bottom bg-light py-3 shadow-lg">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-3">
+                            <button class="btn btn-primary rounded-pill px-4 py-2 shadow-sm" @onclick="GetSharableURLForRawJson">
+                                <i class="bi bi-play-circle me-1"></i> Get Shareable URL
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <h1 class="text-center my-4 fw-bold text-primary">Free Online JSON Data Generator</h1>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow-sm mb-4 rounded-3">
+                    <div class="card-header bg-primary text-white text-center py-3 rounded-top-3">
+                        <h2 class="mb-0 fs-3">Mock Your API and Build UI Faster with Custom JSON</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="lead">Creating a functional UI or testing your application thoroughly often requires realistic API responses. Our free online JSON data generator helps you quickly create custom JSON data for mocking API endpoints, generating test data, and accelerating development workflows.</p>
+                        <p>We now offer two convenient ways to generate mock API responses:</p>
+                        <ul>
+                            <li><strong>Schema to JSON & URL:</strong> Define a schema and instantly generate structured JSON data along with a mock API URL you can use in development.</li>
+                            <li><strong>Raw JSON to URL:</strong> Paste your own raw JSON and get an instant mock API endpoint without writing any backend code.</li>
+                        </ul>
+                        <p>These features allow frontend and backend teams to work in parallel, simulate error scenarios, and streamline prototyping and testing.</p>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm mb-4 rounded-3">
+                    <div class="card-header bg-success text-white text-center py-3 rounded-top-3">
+                        <h2 class="mb-0 fs-3">About JSON Generator</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="lead">JSON Generator is an online tool designed for developers, testers, and educators who need to generate and manage JSON data with precision and ease. Whether you want structured schema-based data or quick endpoints using raw JSON, our platform simplifies the entire process.</p>
+                        <p>You can define templates that control the structure and content of your JSON output. Use it to mock API responses, generate diverse test payloads, or create meaningful educational examples. The flexibility and speed of this tool make it an essential resource for modern development teams.</p>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm rounded-3">
+                    <div class="card-header bg-info text-white text-center py-3 rounded-top-3">
+                        <h2 class="mb-0 fs-3">Why Choose Our JSON Data Generator</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><p><strong>Supports Schema and Raw JSON:</strong> Generate mock APIs from either a defined schema or your own JSON data, offering complete flexibility for your workflow.</p></li>
+                            <li class="mb-3"><p><strong>Fast and Intuitive:</strong> Our simple interface makes it easy to define, modify, and export JSON without writing any code.</p></li>
+                            <li class="mb-3"><p><strong>Designed for Developers and Testers:</strong> Ideal for mocking APIs, testing frontends, and creating demo environments in minutes.</p></li>
+                            <li class="mb-3"><p><strong>High-Volume and Consistent Data:</strong> Quickly generate large datasets with consistent formatting, helping you simulate production-like scenarios.</p></li>
+                            <li class="mb-3"><p><strong>Flexible Editing:</strong> Modify your JSON structures on the fly without starting over, saving time during iteration.</p></li>
+                            <li class="mb-0"><p><strong>Standards-Compliant:</strong> All JSON output follows <a href="https://www.rfc-editor.org/rfc/rfc8259" target="_blank" rel="noopener noreferrer">RFC 8259</a> and <a href="https://www.ecma-international.org/publications-and-standards/standards/ecma-404/" target="_blank" rel="noopener noreferrer">ECMA-404</a> specifications to ensure broad compatibility and validation.</p></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.scrollToSharableUrl = () => {
+        const el = document.getElementById("sharable-url");
+        if (el && !isInViewport(el)) {
+            el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+        function isInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight);
+        }
+    };
+</script>

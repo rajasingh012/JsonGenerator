@@ -1,0 +1,14 @@
+﻿<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://jsondatagenerator.com/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://jsondatagenerator.com/blogs/generate-json-mock-data.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jsondatagenerator.com/webstories/why-json-common-standard.html</loc>
+    <priority>0.6</priority>
+  </url>
+</urlset>
